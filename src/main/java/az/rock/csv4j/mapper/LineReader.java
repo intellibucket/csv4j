@@ -3,6 +3,7 @@ package az.rock.csv4j.mapper;
 import az.rock.csv4j.annotation.CSVReference;
 
 import java.lang.annotation.Annotation;
+import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -18,24 +19,49 @@ public class LineReader<T> {
 
     public T mapLine(String line){
         this.setStatePojo(line);
-
         return this.pojo;
     }
 
-    private void setStatePojo(String line){
-        var columnValueMap = this.prepareColumnValue(line);
+//    private synchronized void setStatePojo(String line){
+//        var columnValueMap = this.prepareColumnValue(line);
+//        Field[] fields = this.pojo.getClass().getDeclaredFields();
+//        for (Field field:fields){
+//            try {
+//                field.setAccessible(true);
+//                field.set(this.pojo,columnValueMap.get(this.getColumnName(field)).getValue());
+//                field.setAccessible(false);
+//            } catch (IllegalAccessException e) {
+//                throw new RuntimeException(e);
+//            }
+//        }
+//    }
 
+    private synchronized void setStatePojo(String line){
+        POJOFieldPool<T> pojoFieldPool = new POJOFieldPool<>(this.header,this.pojo);
+        var headerValueFieldContainer = pojoFieldPool.getContainer();
+        var csvColumnValueMap = this.prepareColumnValue(line);
+        var csvHeaderValueSet  = csvColumnValueMap.keySet();
+        for (String csvHeaderValue: csvHeaderValueSet){
+            Field field = headerValueFieldContainer.get(csvHeaderValue).getField();
+            try {
+                field.setAccessible(true);
+                field.set(this.pojo,csvColumnValueMap.get(csvHeaderValue));
+            } catch (IllegalAccessException e) {
+                throw new RuntimeException(e);
+            }finally {
+                field.setAccessible(false);
+            }
+        }
     }
 
 
-    private  Map<String,FieldReference> prepareColumnValue(String line){
-        final Map<String,FieldReference> columnValue = new HashMap<>();
+    private  Map<String, CSVFieldReference> prepareColumnValue(String line){
+        final Map<String, CSVFieldReference> columnValue = new HashMap<>();
         String[] separatedHeader = this.header.split(",");
         String[] separatedLine = line.split(",");
         for (var i = 0;i < separatedHeader.length;i++){
-            columnValue.put(separatedHeader[i],FieldReference.of(separatedLine[i]));
+            columnValue.put(separatedHeader[i], CSVFieldReference.of(separatedLine[i]));
         }
-        System.out.println(columnValue);
         return columnValue;
     }
 

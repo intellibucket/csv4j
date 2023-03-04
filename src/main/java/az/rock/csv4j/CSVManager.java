@@ -49,7 +49,7 @@ public class CSVManager<T> {
         Scanner scanner = new Scanner(csvFile);
         this.header = scanner.nextLine();
         while (scanner.hasNext()){
-            this.list.add((T) this.map(scanner.nextLine()));
+            this.list.add(this.map(scanner.nextLine()));
         }
         return this.list;
     }
@@ -61,7 +61,7 @@ public class CSVManager<T> {
         if (annotations.isEmpty()) throw new RuntimeException("Not defined");
     }
 
-    private Object map(String line){
+    private T map(String line){
         var lineReader = new LineReader<T>(this.header,(T) this.newInstance());
         return lineReader.mapLine(line);
     }
