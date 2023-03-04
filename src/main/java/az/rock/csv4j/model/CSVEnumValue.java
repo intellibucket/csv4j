@@ -1,4 +1,4 @@
-package az.rock.csv4j.annotation;
+package az.rock.csv4j.model;
 
 public interface CSVEnumValue {
     String getCSVValue();

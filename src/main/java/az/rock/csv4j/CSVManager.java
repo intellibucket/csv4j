@@ -1,6 +1,7 @@
 package az.rock.csv4j;
 
 import az.rock.csv4j.annotation.CSVModel;
+import az.rock.csv4j.mapper.LineReader;
 import az.rock.csv4j.strategy.CSVRuntimeStrategy;
 import az.rock.csv4j.strategy.CSVStrategyPrototype;
 import org.reflections.Reflections;
@@ -23,6 +24,7 @@ public class CSVManager<T> {
     private final CSVRuntimeStrategy runtimeStrategy;
     private final String resourcePath;
     private final Class<?> type;
+    private String header;
 
     public CSVManager(Class<?> type,
                       String resourcePath,
@@ -45,7 +47,7 @@ public class CSVManager<T> {
         this.controlModelForRead(this.type);
         var csvFile = this.getCSVFromResource(this.resourcePath);
         Scanner scanner = new Scanner(csvFile);
-        var header = scanner.nextLine();
+        this.header = scanner.nextLine();
         while (scanner.hasNext()){
             this.list.add((T) this.map(scanner.nextLine()));
         }
@@ -60,9 +62,8 @@ public class CSVManager<T> {
     }
 
     private Object map(String line){
-        Object newObject = this.newInstance();
-
-        return newObject;
+        var lineReader = new LineReader<T>(this.header,(T) this.newInstance());
+        return lineReader.mapLine(line);
     }
 
     private Object newInstance(){
