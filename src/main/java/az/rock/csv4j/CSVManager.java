@@ -23,20 +23,20 @@ public class CSVManager<T> {
     private final List<T> list = new ArrayList<>();
     private final CSVRuntimeStrategy runtimeStrategy;
     private final String resourcePath;
-    private final Class<?> type;
+    private final Class<?> mainPojoType;
     private String header;
 
-    public CSVManager(Class<?> type,
+    public CSVManager(Class<?> mainPojoType,
                       String resourcePath,
                       CSVRuntimeStrategy runtimeStrategy) {
         this.resourcePath = resourcePath;
-        this.type = type;
+        this.mainPojoType = mainPojoType;
         this.runtimeStrategy  = runtimeStrategy;
     }
 
-    public CSVManager(Class<?> type,String resourcePath) {
+    public CSVManager(Class<?> mainPojoType, String resourcePath) {
         this.resourcePath = resourcePath;
-        this.type = type;
+        this.mainPojoType = mainPojoType;
         this.runtimeStrategy = CSVStrategyPrototype.defaultStrategy();
     }
 
@@ -44,7 +44,7 @@ public class CSVManager<T> {
 
     public List<T> read() throws URISyntaxException, FileNotFoundException {
         this.list.clear();
-        this.controlModelForRead(this.type);
+        this.controlModelForRead(this.mainPojoType);
         var csvFile = this.getCSVFromResource(this.resourcePath);
         Scanner scanner = new Scanner(csvFile);
         this.header = scanner.nextLine();
@@ -62,21 +62,31 @@ public class CSVManager<T> {
     }
 
     private T map(String line){
-        var lineReader = new LineReader<T>(this.header,(T) this.newInstance());
+        var lineReader = new LineReader<T>(this.header,this.loadAnyReferences());
         return lineReader.mapLine(line);
     }
 
-    private Object newInstance(){
+    private Object newInstance(Class<?> type){
         try {
-            Constructor<?> constructor = type.getConstructor();
+            Constructor<?> constructor =  type.getConstructor();
             return constructor.newInstance();
         } catch (NoSuchMethodException | InvocationTargetException | InstantiationException | IllegalAccessException e) {
             throw new RuntimeException(e);
         }
     }
 
+
+    private T loadAnyReferences(){
+        Object object = this.newInstance(this.mainPojoType);
+
+
+        return (T) object;
+    }
+
+
+
     private File getCSVFromResource(String resourcePath){
-        URL resource = CSVManager.class.getClassLoader().getResource("MOCK_DATA.csv");
+        URL resource = CSVManager.class.getClassLoader().getResource(resourcePath);
         try {
             Objects.requireNonNull(resource,"File not found Exception");
             return Paths.get(resource.toURI()).toFile();

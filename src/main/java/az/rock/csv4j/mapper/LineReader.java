@@ -22,20 +22,6 @@ public class LineReader<T> {
         return this.pojo;
     }
 
-//    private synchronized void setStatePojo(String line){
-//        var columnValueMap = this.prepareColumnValue(line);
-//        Field[] fields = this.pojo.getClass().getDeclaredFields();
-//        for (Field field:fields){
-//            try {
-//                field.setAccessible(true);
-//                field.set(this.pojo,columnValueMap.get(this.getColumnName(field)).getValue());
-//                field.setAccessible(false);
-//            } catch (IllegalAccessException e) {
-//                throw new RuntimeException(e);
-//            }
-//        }
-//    }
-
     private synchronized void setStatePojo(String line){
         POJOFieldPool<T> pojoFieldPool = new POJOFieldPool<>(this.header,this.pojo);
         var headerValueFieldContainer = pojoFieldPool.getContainer();
@@ -65,8 +51,4 @@ public class LineReader<T> {
         return columnValue;
     }
 
-    private Annotation hasAynReference(){
-        CSVReference csvReference = this.pojo.getClass().getAnnotation(CSVReference.class);
-        return csvReference;
-    }
 }
