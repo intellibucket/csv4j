@@ -5,19 +5,27 @@ csv4j reads files in variations of the Comma Separated Value (CSV) format and ma
 
 
 ```java
-public class Entity {
-    private String name;
+@CSVModel
+public class Person  {
+
+    @CSVColumn(name = "id",type = ColumnType.GUID)
+    private UUID uuid;
+
+    @CSVColumn(name = "first_name")
+    private String firstName;
+
+    @CSVColumn(name = "last_name")
     private String lastName;
-    private int age;
-    private boolean clip;
 
-    public Entity(String name,String lastName,int age,boolean clip){
-        this.name = name;
-        this.lastName = lastName;
-        this.age = age;
-        this.clip = clip;
+    @CSVColumn(name = "birthday",type = ColumnType.DATE)
+    private Date birthday;
 
-    }
+    @CSVColumn(name = "email")
+    private String email;
+
+    @CSVColumn(name = "gender")
+    private String gender;
+    
 }
 ```
 The fields we want to be added to the DTO - must have the same name as the fields in the Entity class.
