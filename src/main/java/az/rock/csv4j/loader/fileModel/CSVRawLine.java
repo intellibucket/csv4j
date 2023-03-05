@@ -19,7 +19,7 @@ public class CSVRawLine {
         this.rawLine = rawLine;
     }
 
-    public void prepareRawLine(){
+    private void prepareRawLine(){
         this.csvRawLineMap.clear();
         String[] rawValues = this.rawLine.split(",");
         IntStream.range(0,rawValues.length).forEach(i->this.csvRawLineMap.put(i,CSVRawValue.of(rawValues[i])));
@@ -31,5 +31,13 @@ public class CSVRawLine {
                 "rawLine='" + rawLine + '\'' +
                 ", csvRawLineMap=" + csvRawLineMap +
                 '}';
+    }
+
+    public Map<Integer, CSVRawValue> getCsvRawLineMap() {
+        return csvRawLineMap;
+    }
+
+    public String getRawValue(Integer index){
+        return this.csvRawLineMap.get(index).getRawValue();
     }
 }

@@ -42,31 +42,31 @@ public class CSVManager2<T> {
     }
 
 
+//
+//    public List<T> read() throws URISyntaxException, FileNotFoundException {
+//        this.list.clear();
+//        this.controlModelForRead(this.mainPojoType);
+//        var csvFile = this.getCSVFromResource(this.resourcePath);
+//        Scanner scanner = new Scanner(csvFile);
+//        this.header = scanner.nextLine();
+//        while (scanner.hasNext()){
+//            this.list.add(this.map(scanner.nextLine()));
+//        }
+//        return this.list;
+//    }
 
-    public List<T> read() throws URISyntaxException, FileNotFoundException {
-        this.list.clear();
-        this.controlModelForRead(this.mainPojoType);
-        var csvFile = this.getCSVFromResource(this.resourcePath);
-        Scanner scanner = new Scanner(csvFile);
-        this.header = scanner.nextLine();
-        while (scanner.hasNext()){
-            this.list.add(this.map(scanner.nextLine()));
-        }
-        return this.list;
-    }
 
-
-    private void controlModelForRead(Class<?> type){
-        Reflections reflections = new Reflections(type);
-        var annotations = reflections.getTypesAnnotatedWith(CSVModel.class);
-        if (annotations.isEmpty()) throw new RuntimeException("Not defined");
-    }
-
-    private T map(String line){
-        Object object = this.newInstance(this.mainPojoType);
-        var lineReader = new LineReader<T>(this.header, (T) this.loadAnyReferences(object));
-        return lineReader.mapLine(line);
-    }
+//    private void controlModelForRead(Class<?> type){
+//        Reflections reflections = new Reflections(type);
+//        var annotations = reflections.getTypesAnnotatedWith(CSVModel.class);
+//        if (annotations.isEmpty()) throw new RuntimeException("Not defined");
+//    }
+//
+//    private T map(String line){
+//        Object object = this.newInstance(this.mainPojoType);
+//        var lineReader = new LineReader<T>(this.header, (T) this.loadAnyReferences(object));
+//        return lineReader.mapLine(line);
+//    }
 
     private Object newInstance(Class<?> type){
         try {
@@ -77,30 +77,30 @@ public class CSVManager2<T> {
         }
     }
 
+//
+//    private Object loadAnyReferences(Object object){
+//        Field[] fields = object.getClass().getDeclaredFields();
+//        for (Field field:fields){
+//            this.iterateFileds(object,field);
+//        }
+//
+//        return  object;
+//    }
 
-    private Object loadAnyReferences(Object object){
-        Field[] fields = object.getClass().getDeclaredFields();
-        for (Field field:fields){
-            this.iterateFileds(object,field);
-        }
-
-        return  object;
-    }
-
-    private void  iterateFileds(Object obj,Field field){
-        if (field.isAnnotationPresent(CSVReference.class)){
-            field.setAccessible(true);
-            try {
-                Object fieldObject = this.newInstance(field.getType());
-                field.set(obj,fieldObject);
-                this.loadAnyReferences(fieldObject);
-            } catch (IllegalAccessException e) {
-                throw new RuntimeException(e);
-            }finally {
-                field.setAccessible(false);
-            }
-        }else return;
-    }
+//    private void  iterateFileds(Object obj,Field field){
+//        if (field.isAnnotationPresent(CSVReference.class)){
+//            field.setAccessible(true);
+//            try {
+//                Object fieldObject = this.newInstance(field.getType());
+//                field.set(obj,fieldObject);
+//                this.loadAnyReferences(fieldObject);
+//            } catch (IllegalAccessException e) {
+//                throw new RuntimeException(e);
+//            }finally {
+//                field.setAccessible(false);
+//            }
+//        }else return;
+//    }
 
 
 

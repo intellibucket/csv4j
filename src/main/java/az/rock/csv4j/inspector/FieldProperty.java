@@ -5,12 +5,13 @@ import az.rock.csv4j.exception.ElementManyAnnotatedException;
 
 import java.lang.reflect.Field;
 
-public class FieldProperty {
+public class FieldProperty<T> {
     private final Field field;
     private CSVColumn csvColumnAnnotation;
+    private Boolean available;
 
-    public static FieldProperty of(Field field) throws ElementManyAnnotatedException {
-        FieldProperty fieldProperty = new FieldProperty(field);
+    public static <T> FieldProperty<T> of(Field field) throws ElementManyAnnotatedException {
+        FieldProperty<T> fieldProperty = new FieldProperty<>(field);
         fieldProperty.init();
         return fieldProperty;
     }
@@ -21,6 +22,7 @@ public class FieldProperty {
 
     private void init() throws ElementManyAnnotatedException {
         if (this.isCSVPresent()) {
+            this.available = Boolean.TRUE;
             this.csvColumnAnnotation = this.field.getDeclaredAnnotation(CSVColumn.class);
         }
     }
@@ -28,6 +30,7 @@ public class FieldProperty {
     public Boolean isCSVPresent(){
         return this.field.isAnnotationPresent(CSVColumn.class);
     }
+
     public String getIdentityName(){
         if (this.isCSVPresent()){
             if (this.csvColumnAnnotation.name().trim().equals("")){
@@ -37,7 +40,9 @@ public class FieldProperty {
         return "";
     }
 
-
+    public void setValue(T object,String value){
+        this.csvColumnAnnotation.type().typeReference().set(object,this.field,value);
+    }
 
     private boolean isPrimitive(){
         return this.field.getType().isPrimitive();
@@ -67,4 +72,7 @@ public class FieldProperty {
         return this.field.getType().isSynthetic();
     }
 
+    public Boolean isAvailable() {
+        return available;
+    }
 }
