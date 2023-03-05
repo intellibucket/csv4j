@@ -1,5 +1,6 @@
 package az.rock.csv4j.annotation;
 
+import az.rock.csv4j.inspector.type.DateTypeReference;
 import az.rock.csv4j.inspector.type.GUIDTypeReference;
 import az.rock.csv4j.inspector.type.TextTypeReference;
 import az.rock.csv4j.inspector.type.TypeReference;;
@@ -26,7 +27,7 @@ public enum ColumnType {
     DATE{
         @Override
         public <T> TypeReference<T> typeReference() {
-            return null;
+            return new DateTypeReference<>();
         }
     },
     INTEGER{
