@@ -30,8 +30,10 @@ public class Person  {
 ```
 The fields we want to be added to the DTO - must have the same name as the fields in the Entity class.
 ```csv
-id,first_name,last_name,birthday,email,gender,city,address
-a3a49331-4295-4c9e-890c-decb97bb5906,Hussein,Kubiczek,6/20/2002,hkubiczek0@google.cn,Male,Danghara,Apt 1235
+|id                                  |first_name|last_name|birthday |email               |gender|city    |address |
+|------------------------------------|----------|---------|---------|--------------------|------|--------|--------|
+|a3a49331-4295-4c9e-890c-decb97bb5906|Hussein   |Kubiczek |6/20/2002|hkubiczek0@google.cn|Male  |Danghara|Apt 1235|
+
 ```
 
 ```java
