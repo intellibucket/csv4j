@@ -22,6 +22,15 @@ public class Person  {
 
     @CSVColumn(name = "email")
     private String email;
+
+    @CSVColumn(name = "gender")
+    private String gender;
+
+    @CSVColumn(name = "city")
+    private String city_city;
+
+    @CSVColumn(name = "address")
+    private String address;
     
 }
 ```
@@ -52,7 +61,7 @@ public class Main {
 
 ```java
 #Output
-Person{id='a3a49331-4295-4c9e-890c-decb97bb5906', firstName='Hussein', lastName='Kubiczek', birthday='Thu Jun 20 00:00:00 AZST 2002', email='hkubiczek0@google.cn'}
+Person{uuid=a3a49331-4295-4c9e-890c-decb97bb5906, firstName='Hussein', lastName='Kubiczek', birthday=Thu Jun 20 00:00:00 AZST 2002, email='hkubiczek0@google.cn', gender='Male', city_city='Danghara', address='Apt 1235'}
 ```
 
 ## Contributing
