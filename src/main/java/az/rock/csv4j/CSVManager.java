@@ -1,6 +1,7 @@
 package az.rock.csv4j;
 
 import az.rock.csv4j.annotation.CSVModel;
+import az.rock.csv4j.annotation.CSVReference;
 import az.rock.csv4j.mapper.LineReader;
 import az.rock.csv4j.strategy.CSVRuntimeStrategy;
 import az.rock.csv4j.strategy.CSVStrategyPrototype;
@@ -9,6 +10,7 @@ import org.reflections.Reflections;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -62,7 +64,8 @@ public class CSVManager<T> {
     }
 
     private T map(String line){
-        var lineReader = new LineReader<T>(this.header,this.loadAnyReferences());
+        Object object = this.newInstance(this.mainPojoType);
+        var lineReader = new LineReader<T>(this.header, (T) this.loadAnyReferences(object));
         return lineReader.mapLine(line);
     }
 
@@ -76,11 +79,28 @@ public class CSVManager<T> {
     }
 
 
-    private T loadAnyReferences(){
-        Object object = this.newInstance(this.mainPojoType);
+    private Object loadAnyReferences(Object object){
+        Field[] fields = object.getClass().getDeclaredFields();
+        for (Field field:fields){
+            this.iterateFileds(object,field);
+        }
 
+        return  object;
+    }
 
-        return (T) object;
+    private void  iterateFileds(Object obj,Field field){
+        if (field.isAnnotationPresent(CSVReference.class)){
+            field.setAccessible(true);
+            try {
+                Object fieldObject = this.newInstance(field.getType());
+                field.set(obj,fieldObject);
+                this.loadAnyReferences(fieldObject);
+            } catch (IllegalAccessException e) {
+                throw new RuntimeException(e);
+            }finally {
+                field.setAccessible(false);
+            }
+        }else return;
     }
 
 
