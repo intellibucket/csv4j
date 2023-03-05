@@ -45,7 +45,7 @@ public class LineReader<T> {
             Field field = headerValueFieldContainer.get(csvHeaderValue).getField();
             try {
                 field.setAccessible(true);
-                field.set(this.pojo,csvColumnValueMap.get(csvHeaderValue));
+                field.set(this.pojo,csvColumnValueMap.get(csvHeaderValue).getValue());
             } catch (IllegalAccessException e) {
                 throw new RuntimeException(e);
             }finally {
