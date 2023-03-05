@@ -1,7 +1,6 @@
 package az.rock.csv4j;
 
 import az.rock.csv4j.annotation.CSVModel;
-import az.rock.csv4j.annotation.CSVReference;
 import az.rock.csv4j.mapper.LineReader;
 import az.rock.csv4j.strategy.CSVRuntimeStrategy;
 import az.rock.csv4j.strategy.CSVStrategyPrototype;

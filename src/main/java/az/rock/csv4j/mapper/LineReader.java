@@ -1,8 +1,5 @@
 package az.rock.csv4j.mapper;
 
-import az.rock.csv4j.annotation.CSVReference;
-
-import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;

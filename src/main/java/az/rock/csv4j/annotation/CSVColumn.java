@@ -10,13 +10,11 @@ import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
-public @interface CSVElement {
+public @interface CSVColumn {
+    String name() default "";
+    CSVReaderPolicy readPolicy() default CSVReaderPolicy.HEADER_NAME;
     boolean nullable() default true;
     String defaultValue() default "";
-    CSVReaderPolicy readPolicy() default CSVReaderPolicy.HEADER_NAME;
-    boolean isEnum() default false;
-    String name();
 
-
-
+    ColumnType type() default ColumnType.TEXT;
 }

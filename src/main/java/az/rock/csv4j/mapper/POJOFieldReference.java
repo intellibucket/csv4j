@@ -1,13 +1,13 @@
 package az.rock.csv4j.mapper;
 
-import az.rock.csv4j.annotation.CSVElement;
+import az.rock.csv4j.annotation.CSVColumn;
 
 import java.lang.reflect.Field;
 import java.util.Objects;
 
 public class POJOFieldReference {
 
-    private CSVElement csvElement;
+    private CSVColumn csvColumn;
 
     private final Field field;
 
@@ -20,8 +20,8 @@ public class POJOFieldReference {
     }
 
     private void init(){
-        this.csvElement = this.field.getDeclaredAnnotation(CSVElement.class);
-        if (!Objects.isNull(this.csvElement)){
+        this.csvColumn = this.field.getDeclaredAnnotation(CSVColumn.class);
+        if (!Objects.isNull(this.csvColumn)){
 
         }
     }
@@ -29,12 +29,12 @@ public class POJOFieldReference {
 
     public boolean match(String headerName){
         this.init();
-        if (Objects.isNull(this.csvElement)) return false;
+        if (Objects.isNull(this.csvColumn)) return false;
         else {
-            if (this.csvElement.name().trim().equals("")){
+            if (this.csvColumn.name().trim().equals("")){
                 return this.field.getName().equals(headerName);
             }else {
-                return this.csvElement.name().equals(headerName);
+                return this.csvColumn.name().equals(headerName);
             }
         }
     };
