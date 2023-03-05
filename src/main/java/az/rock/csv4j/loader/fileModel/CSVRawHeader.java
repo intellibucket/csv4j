@@ -26,4 +26,10 @@ public class CSVRawHeader {
         IntStream.range(0,headerElements.length).forEach(i-> this.indexHeaderValue.put(i,headerElements[i]));
     }
 
+    @Override
+    public String toString() {
+        return "CSVRawHeader{" +
+                "indexHeaderValue=" + indexHeaderValue +
+                '}';
+    }
 }

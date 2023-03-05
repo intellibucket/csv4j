@@ -15,4 +15,11 @@ public class CSVRawValue {
     public String getRawValue() {
         return rawValue;
     }
+
+    @Override
+    public String toString() {
+        return "CSVRawValue{" +
+                "rawValue='" + rawValue + '\'' +
+                '}';
+    }
 }

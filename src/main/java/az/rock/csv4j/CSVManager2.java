@@ -21,22 +21,22 @@ import java.util.Objects;
 import java.util.Scanner;
 
 @SuppressWarnings("all")
-public class CSVManager<T> {
+public class CSVManager2<T> {
     private final List<T> list = new ArrayList<>();
     private final CSVRuntimeStrategy runtimeStrategy;
     private final String resourcePath;
     private final Class<?> mainPojoType;
     private String header;
 
-    public CSVManager(Class<?> mainPojoType,
-                      String resourcePath,
-                      CSVRuntimeStrategy runtimeStrategy) {
+    public CSVManager2(Class<?> mainPojoType,
+                       String resourcePath,
+                       CSVRuntimeStrategy runtimeStrategy) {
         this.resourcePath = resourcePath;
         this.mainPojoType = mainPojoType;
         this.runtimeStrategy  = runtimeStrategy;
     }
 
-    public CSVManager(Class<?> mainPojoType, String resourcePath) {
+    public CSVManager2(Class<?> mainPojoType, String resourcePath) {
         this.resourcePath = resourcePath;
         this.mainPojoType = mainPojoType;
         this.runtimeStrategy = CSVStrategyPrototype.defaultStrategy();
@@ -106,7 +106,7 @@ public class CSVManager<T> {
 
 
     private File getCSVFromResource(String resourcePath){
-        URL resource = CSVManager.class.getClassLoader().getResource(resourcePath);
+        URL resource = CSVManager2.class.getClassLoader().getResource(resourcePath);
         try {
             Objects.requireNonNull(resource,"File not found Exception");
             return Paths.get(resource.toURI()).toFile();

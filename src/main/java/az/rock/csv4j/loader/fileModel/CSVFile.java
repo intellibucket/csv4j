@@ -19,4 +19,16 @@ public class CSVFile {
     public boolean addLine(CSVRawLine rawLine){
         return this.pureCSV.add(rawLine);
     }
+
+    @Override
+    public String toString() {
+        return "CSVFile{" +
+                "header=" + header +
+                ", pureCSV=" + pureCSV +
+                '}';
+    }
+
+    public CSVRawHeader getHeader() {
+        return header;
+    }
 }

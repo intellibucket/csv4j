@@ -24,4 +24,12 @@ public class CSVRawLine {
         String[] rawValues = this.rawLine.split(",");
         IntStream.range(0,rawValues.length).forEach(i->this.csvRawLineMap.put(i,CSVRawValue.of(rawValues[i])));
     }
+
+    @Override
+    public String toString() {
+        return "CSVRawLine{" +
+                "rawLine='" + rawLine + '\'' +
+                ", csvRawLineMap=" + csvRawLineMap +
+                '}';
+    }
 }

@@ -1,6 +1,6 @@
 package az.rock.csv4j.loader;
 
-import az.rock.csv4j.CSVManager;
+import az.rock.csv4j.manager.CSVManager;
 import az.rock.csv4j.exception.CSVHeaderNotFoundException;
 import az.rock.csv4j.loader.fileModel.CSVFile;
 import az.rock.csv4j.loader.fileModel.CSVRawHeader;
@@ -77,6 +77,10 @@ public class CSVLoader {
         } catch (URISyntaxException e) {
             throw new RuntimeException("File not found Exception");
         }
+    }
+
+    public CSVFile getCsvFile() {
+        return csvFile;
     }
 
 
