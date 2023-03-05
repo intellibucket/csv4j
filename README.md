@@ -22,9 +22,6 @@ public class Person  {
 
     @CSVColumn(name = "email")
     private String email;
-
-    @CSVColumn(name = "gender")
-    private String gender;
     
 }
 ```
