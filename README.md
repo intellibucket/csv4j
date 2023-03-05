@@ -25,7 +25,7 @@ public class Person  {
     
 }
 ```
-The fields we want to be added to the DTO - must have the same name as the fields in the Entity class.
+.
 ```csv
 |id                                  |first_name|last_name|birthday |email               |gender|city    |address |
 |------------------------------------|----------|---------|---------|--------------------|------|--------|--------|
@@ -35,16 +35,16 @@ The fields we want to be added to the DTO - must have the same name as the field
 
 ```java
 public class Main {
-    public static void main(String[] args) throws DefaultConstructorNotFoundException, IllegalAccessException {
-
-        Entity entity = new Entity("Jack","Whitson",19,true);
-
-        RockMapper<ExampleDTO> rockMapper = new BasicMapper<>(entity,ExampleDTO.class);
-
-        ExampleDTO exampleDTO = rockMapper.map();
-
-        System.out.println(exampleDTO.toString());
-
+    public static void main(String[] args) {
+        CSVManager<Person> csvManager =
+                null;
+        try {
+            csvManager = new CSVManager<>(Person.class,"MOCK_DATA.csv");
+            List<Person> list = csvManager.load();
+            list.forEach(System.out::println);
+        } catch (CSVHeaderNotFoundException | ElementManyAnnotatedException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
 
@@ -52,7 +52,7 @@ public class Main {
 
 ```java
 #Output
-ExampleDTO{name='Jack', lastName='Whitson', age=19}
+Person{id='a3a49331-4295-4c9e-890c-decb97bb5906', firstName='Hussein', lastName='Kubiczek', birthday='Thu Jun 20 00:00:00 AZST 2002', email='hkubiczek0@google.cn'}
 ```
 
 ## Contributing
