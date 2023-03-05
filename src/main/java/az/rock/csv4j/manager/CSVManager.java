@@ -1,6 +1,5 @@
 package az.rock.csv4j.manager;
 
-import az.rock.csv4j.CSVManager2;
 import az.rock.csv4j.exception.CSVHeaderNotFoundException;
 import az.rock.csv4j.exception.ElementManyAnnotatedException;
 import az.rock.csv4j.inspector.POJOInspector;
@@ -8,15 +7,10 @@ import az.rock.csv4j.loader.CSVLoader;
 import az.rock.csv4j.loader.fileModel.CSVRawHeader;
 import az.rock.csv4j.loader.fileModel.CSVRawLine;
 
-import java.io.File;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import java.net.URISyntaxException;
-import java.net.URL;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 @SuppressWarnings("all")
 public class CSVManager<T> {
@@ -27,6 +21,7 @@ public class CSVManager<T> {
     private final POJOInspector pojoInspector;
 
     public CSVManager(Class<T> tClass,String csvResourcePath) throws CSVHeaderNotFoundException, ElementManyAnnotatedException {
+        this.tClass = tClass;
         this.csvLoader = CSVLoader.of(csvResourcePath);
         this.pojoInspector = POJOInspector.of(tClass);
     }
@@ -40,7 +35,7 @@ public class CSVManager<T> {
         CSVRawHeader csvRawHeader = this.csvLoader.getCsvFile().getHeader();
         List<CSVRawLine> rawLines = this.csvLoader.getCsvFile().getPureCSV();
         rawLines.forEach(rawLine->{
-            var result = pojoInspector.setState((T) this.newInstance(this.tClass),rawLine);
+            var result = pojoInspector.setState((T) this.newInstance(this.tClass),csvRawHeader,rawLine);
             this.dataList.add((T) result);
         });
         return this.dataList;

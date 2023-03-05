@@ -34,4 +34,8 @@ public class ModelProperty<T> {
     public FieldProperty<T> get(String fieldIdentity){
         return this.fieldIdentityProperty.get(fieldIdentity);
     }
+
+    public Map<String, FieldProperty<T>> getFieldIdentityProperty() {
+        return fieldIdentityProperty;
+    }
 }

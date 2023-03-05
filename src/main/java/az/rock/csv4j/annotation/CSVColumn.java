@@ -1,8 +1,6 @@
 package az.rock.csv4j.annotation;
 
 
-import az.rock.csv4j.strategy.CSVReaderPolicy;
-
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

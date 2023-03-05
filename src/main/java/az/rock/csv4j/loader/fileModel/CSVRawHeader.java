@@ -1,6 +1,7 @@
 package az.rock.csv4j.loader.fileModel;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.IntStream;
 
@@ -20,10 +21,19 @@ public class CSVRawHeader {
         this.headerLine  = headerLine;
     }
 
-    public void prepareHeader(){
+    private void prepareHeader(){
         this.indexHeaderValue.clear();
         String[] headerElements = this.headerLine.split(",");
         IntStream.range(0,headerElements.length).forEach(i-> this.indexHeaderValue.put(i,headerElements[i]));
+    }
+
+    public String[] header(){
+        String[] headerElements = this.headerLine.split(",");
+        return headerElements;
+    }
+
+    public Map<Integer, String> getIndexHeaderValue() {
+        return indexHeaderValue;
     }
 
     @Override
