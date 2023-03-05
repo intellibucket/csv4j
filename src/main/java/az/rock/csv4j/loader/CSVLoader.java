@@ -2,6 +2,9 @@ package az.rock.csv4j.loader;
 
 import az.rock.csv4j.CSVManager;
 import az.rock.csv4j.exception.CSVHeaderNotFoundException;
+import az.rock.csv4j.loader.fileModel.CSVFile;
+import az.rock.csv4j.loader.fileModel.CSVRawHeader;
+import az.rock.csv4j.loader.fileModel.CSVRawLine;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -14,20 +17,18 @@ public class CSVLoader {
 
     private final LoadStrategy loadStrategy;
 
-    private final List<Map<String,String>> csvList = new ArrayList<>();
+    private final List<Map<String, String>> csvList = new ArrayList<>();
 
-    private CSVRawHeader header;
-
-    private final List<CSVRawLine> pureCSV = new ArrayList<>();
+    private CSVFile csvFile = new CSVFile();
 
     private final String resourcePath;
 
-    private CSVLoader(String resourcePath){
+    private CSVLoader(String resourcePath) {
         this.resourcePath = resourcePath;
         this.loadStrategy = LoadStrategy.defaultStrategy();
     }
 
-    private CSVLoader(String resourcePath,LoadStrategy loadStrategy){
+    private CSVLoader(String resourcePath, LoadStrategy loadStrategy) {
         this.resourcePath = resourcePath;
         this.loadStrategy = loadStrategy;
     }
@@ -38,8 +39,8 @@ public class CSVLoader {
         return csvLoader;
     }
 
-    public static CSVLoader of(String resourcePath,LoadStrategy loadStrategy) throws CSVHeaderNotFoundException {
-        CSVLoader csvLoader = new CSVLoader(resourcePath,loadStrategy);
+    public static CSVLoader of(String resourcePath, LoadStrategy loadStrategy) throws CSVHeaderNotFoundException {
+        CSVLoader csvLoader = new CSVLoader(resourcePath, loadStrategy);
         csvLoader.load();
         return csvLoader;
     }
@@ -53,31 +54,30 @@ public class CSVLoader {
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
-        if (initHeader(scanner)){
-            while (scanner.hasNext()){
-                this.pureCSV.add(CSVRawLine.of(scanner.nextLine()));
+        if (initHeader(scanner)) {
+            while (scanner.hasNext()) {
+                this.csvFile.addLine(CSVRawLine.of(scanner.nextLine()));
             }
-        }else throw new  CSVHeaderNotFoundException();
+        } else throw new CSVHeaderNotFoundException();
     }
 
-    private boolean initHeader(Scanner scanner){
-        if (scanner.hasNext()){
-            this.header = CSVRawHeader.of(scanner.nextLine());
+    private boolean initHeader(Scanner scanner) {
+        if (scanner.hasNext()) {
+            this.csvFile.setHeader(CSVRawHeader.of(scanner.nextLine()));
             return true;
-        }else return false;
+        } else return false;
     }
 
 
-    private File getCSVFromResource(String resourcePath){
+    private File getCSVFromResource(String resourcePath) {
         URL resource = CSVManager.class.getClassLoader().getResource(resourcePath);
         try {
-            Objects.requireNonNull(resource,"File not found Exception");
+            Objects.requireNonNull(resource, "File not found Exception");
             return Paths.get(resource.toURI()).toFile();
         } catch (URISyntaxException e) {
             throw new RuntimeException("File not found Exception");
         }
     }
-
 
 
 }

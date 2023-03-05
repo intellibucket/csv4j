@@ -1,4 +1,4 @@
-package az.rock.csv4j.loader;
+package az.rock.csv4j.loader.fileModel;
 
 public class CSVRawValue {
 
@@ -11,7 +11,6 @@ public class CSVRawValue {
     private CSVRawValue(String rawValue){
         this.rawValue = rawValue;
     }
-
 
     public String getRawValue() {
         return rawValue;

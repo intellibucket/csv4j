@@ -1,4 +1,4 @@
-package az.rock.csv4j.loader;
+package az.rock.csv4j.loader.fileModel;
 
 import java.util.HashMap;
 import java.util.Map;
