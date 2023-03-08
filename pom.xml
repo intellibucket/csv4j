@@ -4,6 +4,26 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
+    <licenses>
+        <license>
+            <name>Rock General Public License v3.0</name>
+            <url>https://www.github.com/l00pss/licenses</url>
+        </license>
+    </licenses>
+
+    <organization>
+        <name>RockDevs</name>
+    </organization>
+
+    <developers>
+        <developer>
+            <name>Vugar Mammadli</name>
+            <email>mammadli.vugar@hotmail.com</email>
+            <organization>RockDevs</organization>
+            <organizationUrl>https://www.github.com/rockdevs</organizationUrl>
+        </developer>
+    </developers>
+
     <groupId>az.rock</groupId>
     <artifactId>csv4j</artifactId>
     <version>1.0-SNAPSHOT</version>

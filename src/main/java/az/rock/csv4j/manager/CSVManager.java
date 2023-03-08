@@ -4,6 +4,7 @@ import az.rock.csv4j.exception.CSVHeaderNotFoundException;
 import az.rock.csv4j.exception.ElementManyAnnotatedException;
 import az.rock.csv4j.inspector.POJOInspector;
 import az.rock.csv4j.loader.CSVLoader;
+import az.rock.csv4j.loader.DefaultCSVLoader;
 import az.rock.csv4j.loader.fileModel.CSVRawHeader;
 import az.rock.csv4j.loader.fileModel.CSVRawLine;
 
@@ -22,7 +23,13 @@ public class CSVManager<T> {
 
     public CSVManager(Class<T> tClass,String csvResourcePath) throws CSVHeaderNotFoundException, ElementManyAnnotatedException {
         this.tClass = tClass;
-        this.csvLoader = CSVLoader.of(csvResourcePath);
+        this.csvLoader = DefaultCSVLoader.of(csvResourcePath);
+        this.pojoInspector = POJOInspector.of(tClass);
+    }
+
+    public CSVManager(Class<T> tClass, CSVLoader csvLoader) throws CSVHeaderNotFoundException, ElementManyAnnotatedException {
+        this.tClass = tClass;
+        this.csvLoader = csvLoader;
         this.pojoInspector = POJOInspector.of(tClass);
     }
 
@@ -30,7 +37,7 @@ public class CSVManager<T> {
         return csvLoader;
     }
 
-    public List<T> load() throws ElementManyAnnotatedException {
+    public List<T> read() throws ElementManyAnnotatedException {
         this.dataList.clear();
         CSVRawHeader csvRawHeader = this.csvLoader.getCsvFile().getHeader();
         List<CSVRawLine> rawLines = this.csvLoader.getCsvFile().getPureCSV();
