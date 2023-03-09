@@ -1,10 +1,10 @@
-package az.rock.csv4j.loader;
+package az.rock.csv4j.deserializer.loader;
 
-import az.rock.csv4j.manager.CSVManager;
+import az.rock.csv4j.deserializer.CSVDeserializer;
 import az.rock.csv4j.exception.CSVHeaderNotFoundException;
-import az.rock.csv4j.loader.fileModel.CSVFile;
-import az.rock.csv4j.loader.fileModel.CSVRawHeader;
-import az.rock.csv4j.loader.fileModel.CSVRawLine;
+import az.rock.csv4j.deserializer.loader.fileModel.CSVFile;
+import az.rock.csv4j.deserializer.loader.fileModel.CSVRawHeader;
+import az.rock.csv4j.deserializer.loader.fileModel.CSVRawLine;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -13,7 +13,7 @@ import java.net.URL;
 import java.nio.file.Paths;
 import java.util.*;
 
-public class CSVLoader {
+public class DefaultCSVLoader implements CSVLoader {
 
     private final LoadStrategy loadStrategy;
 
@@ -23,29 +23,29 @@ public class CSVLoader {
 
     private final String resourcePath;
 
-    private CSVLoader(String resourcePath) {
+    private DefaultCSVLoader(String resourcePath) {
         this.resourcePath = resourcePath;
         this.loadStrategy = LoadStrategy.defaultStrategy();
     }
 
-    private CSVLoader(String resourcePath, LoadStrategy loadStrategy) {
+    private DefaultCSVLoader(String resourcePath, LoadStrategy loadStrategy) {
         this.resourcePath = resourcePath;
         this.loadStrategy = loadStrategy;
     }
 
-    public static CSVLoader of(String resourcePath) throws CSVHeaderNotFoundException {
-        CSVLoader csvLoader = new CSVLoader(resourcePath);
-        csvLoader.load();
-        return csvLoader;
+    public static DefaultCSVLoader of(String resourcePath) throws CSVHeaderNotFoundException {
+        DefaultCSVLoader defaultCsvLoader = new DefaultCSVLoader(resourcePath);
+        defaultCsvLoader.load();
+        return defaultCsvLoader;
     }
 
-    public static CSVLoader of(String resourcePath, LoadStrategy loadStrategy) throws CSVHeaderNotFoundException {
-        CSVLoader csvLoader = new CSVLoader(resourcePath, loadStrategy);
-        csvLoader.load();
-        return csvLoader;
+    public static DefaultCSVLoader of(String resourcePath, LoadStrategy loadStrategy) throws CSVHeaderNotFoundException {
+        DefaultCSVLoader defaultCsvLoader = new DefaultCSVLoader(resourcePath, loadStrategy);
+        defaultCsvLoader.load();
+        return defaultCsvLoader;
     }
 
-    private void load() throws CSVHeaderNotFoundException {
+    public void load() throws CSVHeaderNotFoundException {
         this.csvList.clear();
         var csvFile = this.getCSVFromResource(this.resourcePath);
         Scanner scanner = null;
@@ -70,7 +70,7 @@ public class CSVLoader {
 
 
     private File getCSVFromResource(String resourcePath) {
-        URL resource = CSVManager.class.getClassLoader().getResource(resourcePath);
+        URL resource = CSVDeserializer.class.getClassLoader().getResource(resourcePath);
         try {
             Objects.requireNonNull(resource, "File not found Exception");
             return Paths.get(resource.toURI()).toFile();

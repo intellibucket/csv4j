@@ -1,11 +1,9 @@
 package az.rock.csv4j.inspector;
 
 import az.rock.csv4j.exception.ElementManyAnnotatedException;
-import az.rock.csv4j.loader.fileModel.CSVRawHeader;
-import az.rock.csv4j.loader.fileModel.CSVRawLine;
+import az.rock.csv4j.deserializer.loader.fileModel.CSVRawHeader;
+import az.rock.csv4j.deserializer.loader.fileModel.CSVRawLine;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
 
 public class POJOInspector<T> {

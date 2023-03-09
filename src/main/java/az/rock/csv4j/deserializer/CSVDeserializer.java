@@ -1,11 +1,12 @@
-package az.rock.csv4j.manager;
+package az.rock.csv4j.deserializer;
 
 import az.rock.csv4j.exception.CSVHeaderNotFoundException;
 import az.rock.csv4j.exception.ElementManyAnnotatedException;
 import az.rock.csv4j.inspector.POJOInspector;
-import az.rock.csv4j.loader.CSVLoader;
-import az.rock.csv4j.loader.fileModel.CSVRawHeader;
-import az.rock.csv4j.loader.fileModel.CSVRawLine;
+import az.rock.csv4j.deserializer.loader.CSVLoader;
+import az.rock.csv4j.deserializer.loader.DefaultCSVLoader;
+import az.rock.csv4j.deserializer.loader.fileModel.CSVRawHeader;
+import az.rock.csv4j.deserializer.loader.fileModel.CSVRawLine;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -13,24 +14,28 @@ import java.util.ArrayList;
 import java.util.List;
 
 @SuppressWarnings("all")
-public class CSVManager<T> {
+public class CSVDeserializer<T> implements Deserializer<T>{
 
     private Class<T> tClass;
     private List<T> dataList = new ArrayList<>();
     private final CSVLoader csvLoader;
     private final POJOInspector pojoInspector;
 
-    public CSVManager(Class<T> tClass,String csvResourcePath) throws CSVHeaderNotFoundException, ElementManyAnnotatedException {
+    public CSVDeserializer(Class<T> tClass, String csvResourcePath) throws CSVHeaderNotFoundException, ElementManyAnnotatedException {
         this.tClass = tClass;
-        this.csvLoader = CSVLoader.of(csvResourcePath);
+        this.csvLoader = DefaultCSVLoader.of(csvResourcePath);
         this.pojoInspector = POJOInspector.of(tClass);
     }
 
-    public CSVLoader getCsvLoader() {
-        return csvLoader;
+    public CSVDeserializer(Class<T> tClass, CSVLoader csvLoader) throws CSVHeaderNotFoundException, ElementManyAnnotatedException {
+        this.tClass = tClass;
+        this.csvLoader = csvLoader;
+        this.pojoInspector = POJOInspector.of(tClass);
     }
 
-    public List<T> load() throws ElementManyAnnotatedException {
+
+    @Override
+    public List<T> read() throws ElementManyAnnotatedException {
         this.dataList.clear();
         CSVRawHeader csvRawHeader = this.csvLoader.getCsvFile().getHeader();
         List<CSVRawLine> rawLines = this.csvLoader.getCsvFile().getPureCSV();

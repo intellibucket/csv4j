@@ -1,7 +1,6 @@
-package az.rock.csv4j.loader.fileModel;
+package az.rock.csv4j.deserializer.loader.fileModel;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.stream.IntStream;
 

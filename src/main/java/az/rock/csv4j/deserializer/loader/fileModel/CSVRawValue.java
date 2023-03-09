@@ -1,4 +1,4 @@
-package az.rock.csv4j.loader.fileModel;
+package az.rock.csv4j.deserializer.loader.fileModel;
 
 public class CSVRawValue {
 

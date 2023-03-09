@@ -1,8 +1,7 @@
 package az.rock.csv4j.inspector;
 
-import az.rock.csv4j.loader.fileModel.CSVRawHeader;
-import az.rock.csv4j.loader.fileModel.CSVRawLine;
-import az.rock.csv4j.loader.fileModel.CSVRawValue;
+import az.rock.csv4j.deserializer.loader.fileModel.CSVRawHeader;
+import az.rock.csv4j.deserializer.loader.fileModel.CSVRawLine;
 
 import java.util.HashMap;
 import java.util.Map;
