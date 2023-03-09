@@ -1,10 +1,10 @@
-package az.rock.csv4j.loader;
+package az.rock.csv4j.deserializer.loader;
 
-import az.rock.csv4j.manager.CSVManager;
+import az.rock.csv4j.deserializer.CSVDeserializer;
 import az.rock.csv4j.exception.CSVHeaderNotFoundException;
-import az.rock.csv4j.loader.fileModel.CSVFile;
-import az.rock.csv4j.loader.fileModel.CSVRawHeader;
-import az.rock.csv4j.loader.fileModel.CSVRawLine;
+import az.rock.csv4j.deserializer.loader.fileModel.CSVFile;
+import az.rock.csv4j.deserializer.loader.fileModel.CSVRawHeader;
+import az.rock.csv4j.deserializer.loader.fileModel.CSVRawLine;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -70,7 +70,7 @@ public class DefaultCSVLoader implements CSVLoader {
 
 
     private File getCSVFromResource(String resourcePath) {
-        URL resource = CSVManager.class.getClassLoader().getResource(resourcePath);
+        URL resource = CSVDeserializer.class.getClassLoader().getResource(resourcePath);
         try {
             Objects.requireNonNull(resource, "File not found Exception");
             return Paths.get(resource.toURI()).toFile();
