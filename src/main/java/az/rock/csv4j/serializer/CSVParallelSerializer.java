@@ -9,7 +9,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class CSVParallelSerializer<T> extends CSVSerializer<T>{
-    private final GExecutorService executorService;
+    private final ExecutorService executorService;
 
     public CSVParallelSerializer(List<T> data, File file) throws ElementManyAnnotatedException {
         super(data, file);

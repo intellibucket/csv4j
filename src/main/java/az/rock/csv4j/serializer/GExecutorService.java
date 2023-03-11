@@ -16,12 +16,12 @@ public class GExecutorService {
         this.executorService = executorService;
     }
 
-    public static GExecutorService defaultService(){
-        return new GExecutorService();
+    public static ExecutorService defaultService(){
+        return new GExecutorService().getExecutorService();
     }
 
-    public static GExecutorService of(ExecutorService executorService){
-        return new GExecutorService(executorService);
+    public static ExecutorService of(ExecutorService executorService){
+        return new GExecutorService(executorService).getExecutorService();
     }
 
     public ExecutorService getExecutorService() {
