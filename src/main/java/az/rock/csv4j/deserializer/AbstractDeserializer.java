@@ -1,9 +1,8 @@
 package az.rock.csv4j.deserializer;
 
-import az.rock.csv4j.EnvironmentInitializer;
+import az.rock.csv4j.util.EnvironmentInitializer;
 import az.rock.csv4j.exception.ElementManyAnnotatedException;
 import az.rock.csv4j.inspector.POJOInspector;
-import az.rock.csv4j.serializer.Serializer;
 
 import java.util.List;
 

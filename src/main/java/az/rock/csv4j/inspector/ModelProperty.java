@@ -7,8 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ModelProperty<T> {
-    private Boolean hasHeader = Boolean.TRUE;
-    private Integer availableField;
+
     private final Class<T> tClass;
 
     private final Map<String,FieldProperty<T>> fieldIdentityProperty = new HashMap<>();
