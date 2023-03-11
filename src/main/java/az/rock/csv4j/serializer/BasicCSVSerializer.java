@@ -5,13 +5,13 @@ import az.rock.csv4j.exception.ElementManyAnnotatedException;
 import java.io.File;
 import java.util.List;
 
-public class CSVBasicSerializer<T> extends CSVSerializer<T>{
+public class BasicCSVSerializer<T> extends CSVSerializer<T>{
 
-    public CSVBasicSerializer(List<T> data, File file) throws ElementManyAnnotatedException {
+    public BasicCSVSerializer(List<T> data, File file) throws ElementManyAnnotatedException {
         super(data, file);
     }
 
-    public CSVBasicSerializer(List<T> data, String path) {
+    public BasicCSVSerializer(List<T> data, String path) {
         super(data, path);
     }
 
