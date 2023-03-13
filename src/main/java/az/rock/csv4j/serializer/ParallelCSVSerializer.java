@@ -6,7 +6,7 @@ import java.io.File;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 
-public class ParallelCSVSerializer<T> extends CSVSerializer<T>{
+public class ParallelCSVSerializer<T> extends AbstractCSVSerializer<T> {
     private final ExecutorService executorService;
 
     public ParallelCSVSerializer(List<T> data, File file) throws ElementManyAnnotatedException {
@@ -21,23 +21,8 @@ public class ParallelCSVSerializer<T> extends CSVSerializer<T>{
 
 
     @Override
-    public void preExecution() {
-
-    }
-
-    private Runnable runnable = new Runnable() {
-        @Override
-        public void run() {
-
-        }
-    };
-
-    @Override
     public void execute() {
-        this.executorService.execute(this.runnable);
+        this.executorService.execute(this.runThread);
     }
-
-
-
 
 }

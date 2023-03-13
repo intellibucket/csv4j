@@ -5,7 +5,7 @@ import az.rock.csv4j.exception.ElementManyAnnotatedException;
 import java.io.File;
 import java.util.List;
 
-public class BasicCSVSerializer<T> extends CSVSerializer<T>{
+public class BasicCSVSerializer<T> extends AbstractCSVSerializer<T> {
 
     public BasicCSVSerializer(List<T> data, File file) throws ElementManyAnnotatedException {
         super(data, file);
@@ -17,11 +17,8 @@ public class BasicCSVSerializer<T> extends CSVSerializer<T>{
 
     @Override
     public void execute() {
-
+        this.runThread.run();
     }
 
-    @Override
-    public void preExecution() {
 
-    }
 }
