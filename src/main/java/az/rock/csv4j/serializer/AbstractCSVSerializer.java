@@ -4,6 +4,7 @@ import az.rock.csv4j.exception.ElementManyAnnotatedException;
 
 import java.io.File;
 import java.util.List;
+import java.util.function.Consumer;
 
 public abstract class AbstractCSVSerializer<T> extends AbstractSerializer<T>{
     private final File file;
@@ -23,7 +24,8 @@ public abstract class AbstractCSVSerializer<T> extends AbstractSerializer<T>{
         //prepare environments
     }
 
-    protected Runnable runThread = ()->{
+    protected Consumer<T> rowWriter = (rowElement)->{
         //row based operation
+
     };
 }

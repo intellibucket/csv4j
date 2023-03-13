@@ -17,8 +17,7 @@ public class BasicCSVSerializer<T> extends AbstractCSVSerializer<T> {
 
     @Override
     public void execute() {
-        this.runThread.run();
+        this.getData().forEach(this.rowWriter);
     }
-
 
 }

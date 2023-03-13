@@ -7,22 +7,18 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 
 public class ParallelCSVSerializer<T> extends AbstractCSVSerializer<T> {
-    private final ExecutorService executorService;
 
     public ParallelCSVSerializer(List<T> data, File file) throws ElementManyAnnotatedException {
         super(data, file);
-        this.executorService = GExecutorService.defaultService();
     }
 
     public ParallelCSVSerializer(List<T> data, String path , ExecutorService executorService) {
         super(data, path);
-        this.executorService = GExecutorService.of(executorService);
     }
-
 
     @Override
     public void execute() {
-        this.executorService.execute(this.runThread);
+        this.getData().parallelStream().forEach(this.rowWriter);
     }
 
 }
